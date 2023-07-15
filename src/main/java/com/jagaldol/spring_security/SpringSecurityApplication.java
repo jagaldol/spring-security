@@ -13,8 +13,8 @@ public class SpringSecurityApplication {
 
     @GetMapping("/tdd")
     public String tdd(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        System.out.println(userDetails.getUser().getFullName());;
-        return userDetails.getUsername();
+        System.out.println(userDetails.getUser().getId() + " : " + userDetails.getUser().getRoles());;
+        return String.valueOf(userDetails.getId());
     }
 
     public static void main(String[] args) {

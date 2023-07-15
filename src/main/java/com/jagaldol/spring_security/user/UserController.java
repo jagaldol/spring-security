@@ -3,6 +3,8 @@ package com.jagaldol.spring_security.user;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jagaldol.spring_security._core.errors.exception.Exception401;
 import com.jagaldol.spring_security._core.security.CustomUserDetails;
+import com.jagaldol.spring_security._core.security.JwtTokenProvider;
+import com.jagaldol.spring_security._core.util.ApiUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -48,11 +50,12 @@ public class UserController {
             CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
             System.out.println("customUserDetails : " + customUserDetails.getUser().getUsername());
 
-            // 세션 만들기
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            // JWT 토큰 만들기
+            String jwt = JwtTokenProvider.create(customUserDetails.getUser());
+            return ResponseEntity.ok().header(JwtTokenProvider.HEADER, jwt).body(ApiUtils.success(null));
         } catch (Exception e) {
             throw new Exception401("인증되지 않았습니다.");
         }
-        return ResponseEntity.ok().body("성공!");
+
     }
 }
