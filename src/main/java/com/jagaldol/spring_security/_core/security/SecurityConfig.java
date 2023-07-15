@@ -54,7 +54,7 @@ public class SecurityConfig {
         http.cors().configurationSource(configurationSource());
 
         // 4. jSessionId 가 응답이 될 때 세션영역에서 사라진다(JWT 로 stateless 하게 할거임)
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         // 5. form 로그인 해제해서 UsernamePasswordAuthenticationFilter 비활성화 시키기 (Form Post x-www-form-urlencoded)
         http.formLogin().disable();
