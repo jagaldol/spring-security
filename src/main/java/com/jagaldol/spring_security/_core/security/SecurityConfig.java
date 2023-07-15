@@ -1,5 +1,8 @@
 package com.jagaldol.spring_security._core.security;
 
+import com.jagaldol.spring_security._core.errors.exception.Exception401;
+import com.jagaldol.spring_security._core.errors.exception.Exception403;
+import com.jagaldol.spring_security._core.util.FilterResponseUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -65,10 +68,12 @@ public class SecurityConfig {
         // 8. 인증 실패 처리
         http.exceptionHandling().authenticationEntryPoint(((request, response, authException) -> {
             System.out.println("인증 실패");
+            FilterResponseUtils.unAuthorized(response, new Exception401("인증되지 않았습니다."));
         }));
 
         // 9. 권한 실패 처리
         http.exceptionHandling().accessDeniedHandler((((request, response, accessDeniedException) -> {
+            FilterResponseUtils.forbidden(response, new Exception403("권한이 없습니다."));
             System.out.println("권한 없음");
         })));
 
