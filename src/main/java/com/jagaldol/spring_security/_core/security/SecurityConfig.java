@@ -2,7 +2,10 @@ package com.jagaldol.spring_security._core.security;
 
 import com.jagaldol.spring_security._core.errors.exception.Exception401;
 import com.jagaldol.spring_security._core.errors.exception.Exception403;
+import com.jagaldol.spring_security._core.security.oauth.PrincipalOauth2UserService;
 import com.jagaldol.spring_security._core.util.FilterResponseUtils;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +22,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 public class SecurityConfig {
+
+    @Autowired
+    private PrincipalOauth2UserService principalOauth2UserService;
+
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
@@ -85,6 +92,9 @@ public class SecurityConfig {
                         .anyRequest()
                         .permitAll());
 
+        http.oauth2Login()
+                .userInfoEndpoint()
+                .userService(principalOauth2UserService);
 
         return http.build();
     }

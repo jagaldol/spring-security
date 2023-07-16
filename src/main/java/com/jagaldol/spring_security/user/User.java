@@ -3,10 +3,12 @@ package com.jagaldol.spring_security.user;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@ToString
 @NoArgsConstructor
 @Getter
 @Table(name = "user_tb")
@@ -29,6 +31,10 @@ public class User { // extends 시간설정 (상속)
     private String fullName;
 
     private String roles; // USER, ADMIN
+
+    private String provider;
+
+    private String providerId;
 
     private Boolean status; // true, false
 

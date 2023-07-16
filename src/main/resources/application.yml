@@ -22,8 +22,19 @@ spring:
         format_sql: true
       default_batch_fetch_size: 100
     open-in-view: false
-
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id:
+            client-secret: 
+            scope:
+              - email
+              - profile
 logging:
   level:
     '[com.jagaldol.spring_security]': DEBUG
     '[org.hibernate.type]': TRACE
+
+
