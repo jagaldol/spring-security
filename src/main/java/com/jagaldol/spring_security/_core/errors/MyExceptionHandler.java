@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @RequiredArgsConstructor
 @RestControllerAdvice
@@ -36,6 +37,13 @@ public class MyExceptionHandler {
     public ResponseEntity<?> serverError(Exception500 e) {
         return new ResponseEntity<>(e.body(), e.status());
     }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<?> typeError(MethodArgumentTypeMismatchException e) {
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.error("올바른 타입을 입력해주세요:" + e.getName(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(apiResult, HttpStatus.BAD_REQUEST);
+    }
+
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> unknownServerError(Exception e) {

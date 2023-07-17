@@ -5,6 +5,8 @@ server:
       force: true
   port: 8080
 spring:
+  profiles:
+    active: setting
   datasource:
     url: jdbc:h2:mem:test;MODE=MySQL
     driver-class-name: org.h2.Driver
@@ -22,16 +24,6 @@ spring:
         format_sql: true
       default_batch_fetch_size: 100
     open-in-view: false
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id:
-            client-secret: 
-            scope:
-              - email
-              - profile
 logging:
   level:
     '[com.jagaldol.spring_security]': DEBUG
